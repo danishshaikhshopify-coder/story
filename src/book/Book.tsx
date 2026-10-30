@@ -11,7 +11,7 @@ export default function Book({ onClose }: { onClose: () => void }) {
   const { playSfx } = useAudio();
   const touchStartX = useRef<number | null>(null);
   const committedRef = useRef(true);
-  const fallbackTimer = useRef<ReturnType<typeof setTimeout>>();
+  const fallbackTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const isLast = currentPage === TOTAL - 1;
   const isFirst = currentPage === 0;
@@ -19,7 +19,7 @@ export default function Book({ onClose }: { onClose: () => void }) {
   // Commits the page-turn once, whichever fires first: the real animationend
   // event or this fallback timer (a tab losing focus or a slow device can
   // drop/delay the event, which would otherwise permanently stall navigation).
-  function commitFlip(index: number, dir: "next" | "prev") {
+  function commitFlip(dir: "next" | "prev") {
     if (committedRef.current) return;
     committedRef.current = true;
     clearTimeout(fallbackTimer.current);
@@ -31,7 +31,7 @@ export default function Book({ onClose }: { onClose: () => void }) {
     playSfx(AUDIO_PATHS.pageTurn);
     committedRef.current = false;
     setAnimating({ index, dir });
-    fallbackTimer.current = setTimeout(() => commitFlip(index, dir), 1400);
+    fallbackTimer.current = setTimeout(() => commitFlip(dir), 1400);
   }
 
   function next() {
@@ -46,7 +46,7 @@ export default function Book({ onClose }: { onClose: () => void }) {
 
   function onLeafAnimationEnd(i: number) {
     if (!animating || animating.index !== i) return;
-    commitFlip(animating.index, animating.dir);
+    commitFlip(animating.dir);
   }
 
   function onTouchStart(e: React.TouchEvent) {
