@@ -3,10 +3,10 @@ import { createContext, useContext, useRef, useState, useCallback, type ReactNod
 // Drop your own files at these paths (silently no-ops if missing — see the
 // README note at the bottom of this file for exactly what's needed).
 export const AUDIO_PATHS = {
-  music: "/audio/piano-theme.mp3",
-  bookOpen: "/audio/book-open.mp3",
-  bookClose: "/audio/book-close.mp3",
-  pageTurn: "/audio/page-turn.mp3",
+  music: `${import.meta.env.BASE_URL}audio/piano-theme.mp3`,
+  bookOpen: `${import.meta.env.BASE_URL}audio/book-open.mp3`,
+  bookClose: `${import.meta.env.BASE_URL}audio/book-close.mp3`,
+  pageTurn: `${import.meta.env.BASE_URL}audio/page-turn.mp3`,
 };
 
 interface AudioContextValue {
