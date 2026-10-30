@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100dvh;
+  background: #2b0a14;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Caveat", cursive;
+  -webkit-font-smoothing: antialiased;
+}
